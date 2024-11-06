@@ -32,7 +32,7 @@ def calcular_elemento_malla(S0, k_pasos, dt, sigma):
                 S[i, t] = S[k_pasos, 0] + h * (k_pasos - i)
     
     # Inicializacion de los valores de la opcion en el tiempo de madurez
-    #print(S)
+    
     precios_opcion = np.zeros((2 * k_pasos + 1, k_pasos + 1)) # Mismo tamaño que el precio, pero se recorre de adelante hacia atras
 
     # Precio opcion para una put (Con log aplicado, pues S0 es con log)
@@ -84,7 +84,7 @@ def trinomial_grande_put(S0, N, dt, sigma):
     nodos_malla_fina = []
     nodo_superior_k = 0
     nodo_inferior_k = 0
-
+    # Aqui se eligen los nodos en los que se realizara la malla
     for i in range(1, N*2):
         
         # Chequeo entre que nodos de precio se encuentra el strike K
@@ -106,7 +106,7 @@ def trinomial_grande_put(S0, N, dt, sigma):
     # Calculo los valores de opcion del arbol grande, de los nodos de la malla fina
     mallas = []
     for i in range(len(precios_nodos_malla_fina)):
-        # 
+        #
         valor_inicial = precios_nodos_malla_fina[i]
         mallas.append(calcular_elemento_malla(valor_inicial, k, dt, sigma))
     
@@ -130,12 +130,12 @@ def trinomial_grande_put(S0, N, dt, sigma):
                 opcion_precios[i, t] = np.maximum(K - np.exp(S[i, t]), valor_de_continuacion)
     
     # Imprimir el array de opción usando pandas para un mejor formato
-    option_df = pnd.DataFrame(opcion_precios)
-    print("Precio opciones")
-    print(option_df)
-    price_df = pnd.DataFrame(S)
-    print("Arbol Precios ")
-    print(price_df)
+    # option_df = pnd.DataFrame(opcion_precios)
+    # print("Precio opciones")
+    # print(option_df)
+    # price_df = pnd.DataFrame(S)
+    # print("Arbol Precios ")
+    # print(price_df)
     return opcion_precios[N, 0]
 
 
@@ -158,6 +158,7 @@ lista_precios_tm = []
 for i in range(poblacion):
     precio_put = trinomial_grande_put(s0+i,N,dt,sigma)
     lista_precios_tm.append(precio_put)
+
 print(f"Precios de opción put con trinomial con malla: {lista_precios_tm}")
 
 # Put black scholes
@@ -179,6 +180,7 @@ for i in range(poblacion):
     lista_precios_bs.append(put_price)
 print("Precios con black scholes", lista_precios_bs)
 
+# Calculo del valor absoluto
 error_absoluto_prom = 0
 for i in range(len(lista_precios_tm)):
     error_absoluto_prom += abs(lista_precios_tm[i] - lista_precios_bs[i])

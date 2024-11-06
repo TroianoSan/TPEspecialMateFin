@@ -68,6 +68,7 @@ N = 4  # Número de pasos en el árbol
 # Valor de la opción put americana
 poblacion = 20 
 
+# Calculo el precio de accion para 20 valores de s0
 lista_precios_tm = []
 for i in range(poblacion):
     precio_put = put_americana_trinomial(s0+i,K, T, r, sigma, N)
@@ -77,7 +78,7 @@ print(f"Precios de opción put con trinomial normal: {lista_precios_tm}")
 
 print("El valor de la opción put americana es:", lista_precios_tm)
 
-
+# Blackscholes 
 def black_scholes_put(S, K, T, r, sigma):
 
     # Cálculo de d1 y d2
@@ -95,6 +96,8 @@ K = 35   # Strike
 r = 0.05  # Tasa libre de riesgo (12%)
 sigma = 0.2  # Volatilidad (20%)
 T = 1  # Tiempo hasta la madurez (1 año)
+
+# Calculo el precio de una put con black scholes para 20 valores de s0
 lista_precios_bs = []
 for i in range(poblacion):
     put_price = black_scholes_put(s0+i, K, T, r, sigma)
@@ -102,7 +105,7 @@ for i in range(poblacion):
 
 print("El valor de la opción put es:", lista_precios_bs)
 
-
+# Calculo el error absoluto promedio de los 20 experimentos
 error_absoluto_prom = 0
 for i in range(len(lista_precios_tm)):
     error_absoluto_prom += abs(lista_precios_tm[i] - lista_precios_bs[i])
