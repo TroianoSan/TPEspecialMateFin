@@ -31,10 +31,12 @@ def put_americana_trinomial(S0, K, T, r, sigma, N):
     # Inicialización del árbol de precios del activo subyacente
     precios_activo = np.zeros((2 * N + 1, N + 1))
     precios_activo[N, 0] = S0  # El precio inicial está en el centro del árbol
-    
+
     for j in range(1, N + 1):
         for i in range(N - j, N + j + 1):
-            precios_activo[i, j] = S0 * (u ** max(j - (N - i), 0)) * (d ** max((N + i) - j, 0))
+            # Calcula el desplazamiento desde el nodo inicial
+            desplazamiento = i - N
+            precios_activo[i, j] = S0 * (u ** max(desplazamiento, 0)) * (d ** max(-desplazamiento, 0))
     
     # Inicialización del árbol de valores de la opción
     valores_opcion = np.zeros((2 * N + 1, N + 1))
@@ -52,7 +54,7 @@ def put_americana_trinomial(S0, K, T, r, sigma, N):
                               pd * valores_opcion[i + 1, j + 1]) * factor_descuento
             valor_ejercicio = max(K - precios_activo[i, j], 0)
             valores_opcion[i, j] = max(valor_mantener, valor_ejercicio)
-    
+    print(valores_opcion)
     return valores_opcion[N, 0]
 
 
@@ -74,9 +76,6 @@ for i in range(poblacion):
     precio_put = put_americana_trinomial(s0+i,K, T, r, sigma, N)
     lista_precios_tm.append(precio_put)
 print(f"Precios de opción put con trinomial normal: {lista_precios_tm}")
-
-
-print("El valor de la opción put americana es:", lista_precios_tm)
 
 # Blackscholes 
 def black_scholes_put(S, K, T, r, sigma):
