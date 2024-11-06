@@ -65,7 +65,7 @@ K = 35   # Strike
 r = 0.05  # Tasa libre de riesgo (12%)
 sigma = 0.2  # Volatilidad (20%)
 T = 1  # Tiempo hasta la madurez (1 año)
-N = 100  # Número de pasos en el árbol
+N = 4  # Número de pasos en el árbol
 
 # Valor de la opción put americana
 poblacion = 20 
