@@ -65,7 +65,7 @@ K = 35   # Strike
 r = 0.05  # Tasa libre de riesgo (12%)
 sigma = 0.2  # Volatilidad (20%)
 T = 1  # Tiempo hasta la madurez (1 año)
-N = 4  # Número de pasos en el árbol
+N = 100  # Número de pasos en el árbol
 
 # Valor de la opción put americana
 poblacion = 20 
@@ -89,12 +89,6 @@ def black_scholes_put(S, K, T, r, sigma):
     
     return put_price
 
-# Ejemplo de uso
-s0 = 40  # Precio inicial del activo
-K = 35   # Strike
-r = 0.05  # Tasa libre de riesgo (12%)
-sigma = 0.2  # Volatilidad (20%)
-T = 1  # Tiempo hasta la madurez (1 año)
 
 # Calculo el precio de una put con black scholes para 20 valores de s0
 lista_precios_bs = []
