@@ -54,7 +54,7 @@ def put_americana_trinomial(S0, K, T, r, sigma, N):
                               pd * valores_opcion[i + 1, j + 1]) * factor_descuento
             valor_ejercicio = max(K - precios_activo[i, j], 0)
             valores_opcion[i, j] = max(valor_mantener, valor_ejercicio)
-    print(valores_opcion)
+    
     return valores_opcion[N, 0]
 
 
